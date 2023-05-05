@@ -9,14 +9,14 @@ import os
 MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
 MAILGUN_KEY = os.getenv("MAILGUN_KEY")
 
-def send(config, data):
+def send(config, data=None):
 
     logging.info("sending mail to %s", config['to'])
 
     if 'template' in config:
         config["html"]=klaviyo.donwload(config['template'], data)
 
-    elif 'text' in config:
+    elif data is not None and 'text' in config:
         config['text'] = config['text'].format(**data)
         logging.debug("%s", config['text'])
 
