@@ -12,10 +12,29 @@ pip install git+https://github.com/lastseal/baku-mailgun
 ```python
 from baku import mailgun
 
-res = mailgun.send({
+config = {
   "subject": "Título del correo",
   "from": "origin@origin.com",
   "to": "correo_1@correo.com,correo_2@correo.com,correo_3@correo.com",
-  "text": "Contenido en texto plano"
-})
+  "text": "Hello world"
+}
+
+res = mailgun.send(config)
+```
+
+```python
+from baku import mailgun
+
+config = {
+  "subject": "Título del correo",
+  "from": "origin@origin.com",
+  "to": "correo_1@correo.com,correo_2@correo.com,correo_3@correo.com",
+  "text": "Hello {name}"
+}
+
+data = {
+  "name": "John"
+}
+
+res = mailgun.send(config, data)
 ```
