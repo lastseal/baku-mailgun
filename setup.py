@@ -7,7 +7,7 @@ setup(
     author="Rodrigo Arriaza",
     author_email="hello@lastseal.com",
     url="https://www.lastseal.com",
-    packages=['baku'],
+    packages=['baku', 'baku.mailgun'],
     install_requires=[ 
         i.strip() for i in open("requirements.txt").readlines() 
     ]
