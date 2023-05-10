@@ -19,7 +19,7 @@ def send(config, data=None):
     logging.info("sending mail to %s", config['to'])
 
     if data is not None and 'template' in config:
-        url = f"https://a.klaviyo.com/api/v1/email-template/{KLAVIYO_TEMPLATE_ID}/render?api_key={KLAVIYO_API_KEY}"
+        url = f"https://a.klaviyo.com/api/v1/email-template/{config['template']}/render?api_key={KLAVIYO_API_KEY}"
         res = requests.post(url, data=data, headers={
             "accept": "application/json",
             "content-type": "application/x-www-form-urlencoded"
