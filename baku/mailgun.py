@@ -17,7 +17,6 @@ def send(config, data=None):
     logging.info("sending mail to %s", config['to'])
 
     if data is not None and 'template' in config:
-        url = f"https://a.klaviyo.com/api/template-render/"
         
         payload = {
             "data": {
@@ -34,7 +33,7 @@ def send(config, data=None):
             "Authorization": f"Klaviyo-API-Key {KLAVIYO_API_KEY}"
         }
         
-        res = requests.post(url, json=payload, headers=headers)
+        res = requests.post("https://a.klaviyo.com/api/template-render/", json=payload, headers=headers)
         
         if res.status_code >= 400:
             raise Exception(f"{res.status_code}: {res.text}")
