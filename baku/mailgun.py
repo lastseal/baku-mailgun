@@ -17,18 +17,21 @@ def send(config, data=None):
     logging.info("sending mail to %s", config['to'])
 
     if data is not None and 'template' in config:
-        url = f"https://a.klaviyo.com/api/template-render/{config['template']}/render?api_key={KLAVIYO_API_KEY}"
+        url = f"https://a.klaviyo.com/api/template-render/
         
-        payload = {"data": {
-            "type": "template",
-            "attributes": {"context": data}
-        }}
+        payload = {
+            "data": {
+                "id": config["template"],
+                "type": "template",
+                "attributes": {"context": data}
+            }
+        }
         
         headers = {
             "accept": "application/json",
             "revision": "2023-02-22",
             "content-type": "application/json",
-            "Authorization": "Klaviyo-API-Key your-private-api-key"
+            "Authorization": f"Klaviyo-API-Key {KLAVIYO_API_KEY}"
         }
         
         res = requests.post(url, json=payload, headers=headers)
@@ -36,7 +39,7 @@ def send(config, data=None):
         if res.status_code >= 400:
             raise Exception(f"{res.status_code}: {res.text}")
         
-        config["html"]=res.text
+        config["html"]=res.json()['data']['attributes']['html']
         del config["template"]
 
     elif data is not None and 'text' in config:
