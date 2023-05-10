@@ -17,11 +17,21 @@ def send(config, data=None):
     logging.info("sending mail to %s", config['to'])
 
     if data is not None and 'template' in config:
-        url = f"https://a.klaviyo.com/api/v1/email-template/{config['template']}/render?api_key={KLAVIYO_API_KEY}"
-        res = requests.post(url, data=data, headers={
+        url = f"https://a.klaviyo.com/api/template-render/{config['template']}/render?api_key={KLAVIYO_API_KEY}"
+        
+        payload = {"data": {
+            "type": "template",
+            "attributes": {"context": data}
+        }}
+        
+        headers = {
             "accept": "application/json",
-            "content-type": "application/x-www-form-urlencoded"
-        })
+            "revision": "2023-02-22",
+            "content-type": "application/json",
+            "Authorization": "Klaviyo-API-Key your-private-api-key"
+        }
+        
+        res = requests.post(url, json=payload, headers=headers)
         
         if res.status_code >= 400:
             raise Exception(f"{res.status_code}: {res.text}")
