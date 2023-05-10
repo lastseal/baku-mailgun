@@ -17,7 +17,7 @@ def send(config, data=None):
     logging.info("sending mail to %s", config['to'])
 
     if data is not None and 'template' in config:
-        url = f"https://a.klaviyo.com/api/template-render/
+        url = f"https://a.klaviyo.com/api/template-render/"
         
         payload = {
             "data": {
