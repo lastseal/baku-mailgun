@@ -27,6 +27,7 @@ def send(config, data=None):
             raise Exception(f"{res.status_code}: {res.text}")
         
         config["html"]=res.text
+        del config["template"]
 
     elif data is not None and 'text' in config:
         config['text'] = config['text'].format(**data)
