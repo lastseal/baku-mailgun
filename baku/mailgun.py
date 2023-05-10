@@ -7,8 +7,6 @@ import os
 
 MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
 MAILGUN_KEY = os.getenv("MAILGUN_KEY")
-
-KLAVIYO_TEMPLATE_ID = os.getenv("KLAVIYO_TEMPLATE_ID")
 KLAVIYO_API_KEY = os.getenv("KLAVIYO_API_KEY")
 
 ##
