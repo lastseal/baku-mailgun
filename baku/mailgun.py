@@ -12,7 +12,7 @@ KLAVIYO_API_KEY = os.getenv("KLAVIYO_API_KEY")
 ##
 #
 
-def send(config, data=None):
+def send(config, data=None, files=None):
 
     logging.info("sending mail to %s", config['to'])
 
@@ -36,7 +36,7 @@ def send(config, data=None):
         res = requests.post("https://a.klaviyo.com/api/template-render/", json=payload, headers=headers)
         
         if res.status_code >= 400:
-            raise Exception(f"{res.status_code}: {res.text}")
+            raise Exception({"status": res.status_code, "message": res.text})
         
         config["html"]=res.json()['data']['attributes']['html']
         del config["template"]
@@ -51,7 +51,7 @@ def send(config, data=None):
     )
 
     if res.status_code >= 400:
-        raise Exception(f"{res.status_code}: {res.text}")
+        raise Exception({"status": res.status_code, "message": res.text})
 
     data = res.json()
 
