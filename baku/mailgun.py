@@ -44,10 +44,16 @@ def send(config, data=None, files=None):
     elif data is not None and 'text' in config:
         config['text'] = config['text'].format(**data)
         logging.debug("%s", config['text'])
+        
+    attachment = config.get("attachment", 0)
+    
+    if attachment > 0 and files is not None:
+        files = [("attachment", (files[name].filename, files[name].read())) for name in files]
 
     res = requests.post(f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages",
         auth=("api", MAILGUN_KEY),
-        data=config
+        data=config,
+        files=files
     )
 
     if res.status_code >= 400:
