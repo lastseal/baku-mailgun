@@ -48,6 +48,7 @@ def send(config, data=None, files=None):
     attachment = config.get("attachment", 0)
     
     if attachment > 0 and files is not None:
+        logging.info("files: %s", files)
         files = [("attachment", (files[name].filename, files[name].read())) for name in files]
 
     res = requests.post(f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages",
