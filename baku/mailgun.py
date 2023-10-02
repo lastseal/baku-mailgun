@@ -16,6 +16,8 @@ def send(config, data=None, files=None):
 
     logging.info("sending mail to %s", config['to'])
 
+    config['subject'] = config['subject'].format(**data)
+
     if data is not None and 'template' in config:
         
         payload = {
